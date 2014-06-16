@@ -42,7 +42,6 @@ public class usuario extends javax.swing.JFrame {
  
             //Parametros de entrada EL 1 INDICA PRIMER PARAMETRO
             sp.registerOutParameter(1, OracleTypes.CURSOR);
-            //callableStatement.setLong(2, 1L);
 
             sp.execute();
             //Se obtiene el cursor en forma de ResultSet
@@ -51,8 +50,7 @@ public class usuario extends javax.swing.JFrame {
             while (rs.next()){
                 perfil.addItem( new combos_procedimientos( rs.getInt("id_perfil"),rs.getString("perfil") ));
                 //combo.addElement(rs.getObject("perfil"));
-                //System.out.println(rs.getLong("id_perfil"));
-                //System.out.println(rs.getString("perfil"));
+
             }
             
             rs.close();
@@ -124,19 +122,19 @@ public class usuario extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(id_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(perfil, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(guardar_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
         );
@@ -154,8 +152,8 @@ public class usuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,21 +169,27 @@ public class usuario extends javax.swing.JFrame {
         try{
             conn = c.getConnection();
             
-            CallableStatement sp ;
-
-            sp = conn.prepareCall("call sp_usuario(?,?,?)");
-            sp.setString("id_usuario1", id_usuario.getText().toString() );
-            sp.setInt("id_perfil1", objeto.getCodigo() );
-            sp.setString("pass1", pass.getText().toString() );
-            
-            if(sp.execute() )//Ejecución del procedimiento
+            if( id_usuario.getText().trim().length()==0 ||  pass.getText().trim().length() == 0 )
             {
-                JOptionPane.showMessageDialog(null, "Usuario almacenado correctamente", " ", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else
+            {
+                CallableStatement sp ;
+                sp = conn.prepareCall("call sp_usuario(?,?,?)");
+                sp.setString("id_usuario1", id_usuario.getText().toString() );
+                sp.setInt("id_perfil1", objeto.getCodigo() );
+                sp.setString("pass1", pass.getText().toString() );
+
+                if(sp.execute() )//Ejecución del procedimiento
+                {
+                    JOptionPane.showMessageDialog(null, "Usuario almacenado correctamente", " ", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+                sp.close();
+                conn.close();
             }
             
-            
-            sp.close();
-            conn.close();
             
         }catch(Exception e){
         }
