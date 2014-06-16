@@ -17,8 +17,8 @@ public class OracleConnection {
     public static Connection getConnection() throws Exception {
         String driver = "oracle.jdbc.OracleDriver";
         String url = "jdbc:oracle:thin:@localhost:1521:XE";
-        String username = "basenotas";
-        String password = "basenotas";
+        String username = "notasfia";
+        String password = "1234567";
         Class.forName(driver); // load JDBC-ODBC driver
         return DriverManager.getConnection(url, username, password);
     }

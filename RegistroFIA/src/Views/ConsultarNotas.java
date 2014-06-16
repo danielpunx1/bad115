@@ -4,6 +4,13 @@
  */
 package Views;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import oracle.jdbc.OracleTypes;
+import registrofia.OracleConnection;
+
 /**
  *
  * @author anderson
@@ -15,6 +22,39 @@ public class ConsultarNotas extends javax.swing.JFrame {
      */
     public ConsultarNotas() {
         initComponents();
+        OracleConnection oc = new OracleConnection();
+        Connection conn = null;
+        //Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = oc.getConnection();
+            
+            String query = "BEGIN sp_recuperar_carnets(?); END;";
+            CallableStatement cs;
+            cs = conn.prepareCall(query);
+
+            cs.registerOutParameter(1, OracleTypes.CURSOR);
+            cs.execute();
+            
+            rs = (ResultSet)cs.getObject(1);
+            
+            while (rs.next()) {
+                jComboBox1.addItem(rs.getString("carnet"));
+            }
+        } catch (Exception e) {
+            // handle the exception
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                rs.close();
+                //stmt.close();
+                conn.close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -26,17 +66,32 @@ public class ConsultarNotas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Carnet:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         pack();
@@ -77,5 +132,7 @@ public class ConsultarNotas extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
