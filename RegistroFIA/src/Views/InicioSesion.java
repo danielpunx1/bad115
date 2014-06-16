@@ -122,7 +122,10 @@ public class InicioSesion extends javax.swing.JFrame {
             rs = stmt.executeQuery(query);
             
             if (rs.next()) {
-                System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
+                OracleConnection.setUsr(jTextField1.getText().toString());
+                OracleConnection.setPsw(jPasswordField1.getText().toString());
+                //System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
+                //System.out.println(OracleConnection.getUsr() + " " + OracleConnection.getPsw());
                 this.dispose();
                 new MainMenu().setVisible(true);
             } else {
