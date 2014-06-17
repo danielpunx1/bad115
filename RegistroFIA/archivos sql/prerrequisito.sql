@@ -42,3 +42,51 @@ execute sp_prerrequisito('FIR215','MAT215');
 execute sp_prerrequisito('FIR315','FIR215');
 execute sp_prerrequisito('FIR315','MAT215');
 execute sp_prerrequisito('FIR315','FIR115');
+
+
+-- proc para retornar las materias requisitos de una materia y eliminarlas
+
+create or replace PROCEDURE sp_pre_ret_eliminar
+(
+    materia IN PRERREQUISITO.CODIGO_ASIGNATURA%type,
+    datos OUT SYS_REFCURSOR
+)
+AS
+BEGIN
+    open datos for
+    select materia_rrequisito from prerrequisito where CODIGO_ASIGNATURA = materia;
+END sp_pre_ret_eliminar;
+
+
+-- Elminar las materias requisitos asociadas a una materia en especifico
+
+CREATE OR REPLACE PROCEDURE sp_prerrequisito_eliminar
+(
+   codigo_asignatura1 IN PRERREQUISITO.CODIGO_ASIGNATURA%type,
+   materia_rrequisito1 IN PRERREQUISITO.MATERIA_RREQUISITO%type
+)
+AS
+BEGIN
+    delete from prerrequisito where CODIGO_ASIGNATURA=codigo_asignatura1 and MATERIA_RREQUISITO=materia_rrequisito1;
+END sp_prerrequisito_eliminar;
+
+
+--procedimiento que retorna las asignaturas a usar para los prerrequisitos
+
+CREATE OR REPLACE PROCEDURE sp_asignatura_retornar
+(
+    datos OUT SYS_REFCURSOR
+)
+AS
+BEGIN
+    open datos for
+    select distinct(codigo_asignatura) from prerrequisito;
+END sp_asignatura_retornar;
+
+
+
+
+
+
+
+

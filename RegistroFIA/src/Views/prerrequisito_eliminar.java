@@ -5,20 +5,21 @@
  */
 
 package Views;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import oracle.jdbc.OracleTypes;
 import javax.swing.JOptionPane;
-
+import oracle.jdbc.OracleTypes;
 import registrofia.OracleConnection;
 import registrofia.combos_procedimientos;
 /**
  *
  * @author daniel
  */
-public class prerrequisito_eliminar extends javax.swing.JFrame {
+public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemListener{
 
     /**
      * Creates new form prerrequisito_insertar
@@ -82,9 +83,9 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
 
         jLabel2.setText("Prerrequisito :");
 
-        materia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                materiaActionPerformed(evt);
+        materia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                materiaItemStateChanged(evt);
             }
         });
 
@@ -157,13 +158,13 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
             conn = c.getConnection();
           
             CallableStatement sp ;
-            sp = conn.prepareCall("call sp_prerrequisito(?,?)");
+            sp = conn.prepareCall("call sp_prerrequisito_eliminar(?,?)");
             sp.setString("codigo_asignatura1", objeto1.getdato() );
             sp.setString("materia_rrequisito1", objeto2.getdato() );
               
             if(sp.execute() )//Ejecución del procedimiento
             {
-                JOptionPane.showMessageDialog(null, "Requisito guardado", " ", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Requisito eliminado", " ", JOptionPane.INFORMATION_MESSAGE);
             }
 
                 sp.close();
@@ -173,7 +174,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_EliminarActionPerformed
 
-    private void materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materiaActionPerformed
+    private void materiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_materiaItemStateChanged
         // TODO add your handling code here:
         Connection conn = null;
         OracleConnection c = new OracleConnection();
@@ -197,7 +198,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
             
             sp.execute();
             //Se obtiene el cursor en forma de ResultSet
-            ResultSet rs = (ResultSet)sp.getObject(1);
+            ResultSet rs = (ResultSet)sp.getObject(2);
            
             while (rs.next()){
                 requisito.addItem( new combos_procedimientos( 1 ,rs.getString("materia_rrequisito") ));
@@ -209,7 +210,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
         }
         catch(Exception e){
         }
-    }//GEN-LAST:event_materiaActionPerformed
+    }//GEN-LAST:event_materiaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -254,4 +255,9 @@ public class prerrequisito_eliminar extends javax.swing.JFrame {
     private javax.swing.JComboBox materia;
     private javax.swing.JComboBox requisito;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
