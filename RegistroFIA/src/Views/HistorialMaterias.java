@@ -4,6 +4,16 @@
  */
 package Views;
 
+import static Views.ConsultarNotas.buildTableModel;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import oracle.jdbc.OracleTypes;
+import registrofia.OracleConnection;
+
 /**
  *
  * @author anderson
@@ -15,6 +25,39 @@ public class HistorialMaterias extends javax.swing.JFrame {
      */
     public HistorialMaterias() {
         initComponents();
+        OracleConnection oc = new OracleConnection();
+        Connection conn = null;
+        //Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = oc.getConnection();
+            
+            String query = "BEGIN sp_recuperar_carnets(?); END;";
+            CallableStatement cs;
+            cs = conn.prepareCall(query);
+
+            cs.registerOutParameter(1, OracleTypes.CURSOR);
+            cs.execute();
+            
+            rs = (ResultSet)cs.getObject(1);
+            
+            while (rs.next()) {
+                jComboBox1.addItem(rs.getString("carnet"));
+            }
+        } catch (Exception e) {
+            // handle the exception
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                rs.close();
+                //stmt.close();
+                conn.close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -26,21 +69,91 @@ public class HistorialMaterias extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Historial Materias");
+
+        jLabel1.setText("Carnet:");
+
+        jButton1.setText("Obtener historial");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        OracleConnection oc = new OracleConnection();
+        Connection conn = null;
+        //Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = oc.getConnection();
+            
+            String query = "BEGIN sp_recuperar_hm(?,?); END;";
+            CallableStatement cs;
+            cs = conn.prepareCall(query);
+            
+            cs.setString(2, jComboBox1.getSelectedItem().toString());
+            cs.registerOutParameter(1, OracleTypes.CURSOR);
+            
+            cs.execute();
+            
+            rs = (ResultSet)cs.getObject(1);
+            
+            // It creates and displays the table
+            JTable table = new JTable(buildTableModel(rs));
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            JOptionPane.showMessageDialog(null, new JScrollPane(table, 
+                    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+                    JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), "estudiante@" 
+                    + jComboBox1.getSelectedItem().toString(), JOptionPane.PLAIN_MESSAGE);
+        } catch (Exception e) {
+            // handle the exception
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                rs.close();
+                //stmt.close();
+                conn.close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,5 +190,8 @@ public class HistorialMaterias extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
