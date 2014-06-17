@@ -13,13 +13,6 @@ BEGIN
   values (codigo_asignatura1,codigo_carrera1,tipo_materia1,ciclo1);
 END sp_pensum;
 
--- AGREGANDOLE MATERIAS DE UN PENSUM
-
-execute sp_pensum('MAT215','I10515','obligatoria',2);
-execute sp_pensum('MAT115','I10515','obligatoria',1);
-execute sp_pensum('FIR115','I10515','obligatoria',2);
-execute sp_pensum('FIR215','I10515','obligatoria',3);
-
 
 -- verificamos que una materia solo se pueda asociar una vez a un pensum
 
@@ -35,4 +28,12 @@ BEGIN
        raise_application_error (-20600, 'La asignatura ' || :new.codigo_asignatura || ' ya esta registrada para la carrera ' || :new.codigo_carrera || ' ' );
      END IF;
 END;
+
+
+-- AGREGANDOLE MATERIAS DE UN PENSUM
+
+execute sp_pensum('MAT215','I10515','obligatoria',2);
+execute sp_pensum('MAT115','I10515','obligatoria',1);
+execute sp_pensum('FIR115','I10515','obligatoria',2);
+execute sp_pensum('FIR215','I10515','obligatoria',3);
 

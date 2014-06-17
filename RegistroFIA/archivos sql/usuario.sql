@@ -27,3 +27,17 @@ IS
 BEGIN
     update usuario set estado_usuario=estado_usuario1, pass=pass1 where id_usuario=id_usuario1;
 END sp_usuario_modificar;
+
+
+--retorna los usuarios disponibles para asociarles un alumno
+
+create or replace procedure sp_usuarios_disponibles
+(
+  datos out SYS_REFCURSOR
+)
+as
+begin
+  open datos for
+  select id_usuario from usuario where id_usuario NOT IN (select id_usuario from alumno);
+end sp_usuarios_disponibles;
+
