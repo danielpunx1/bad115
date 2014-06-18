@@ -126,8 +126,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="id_usuario">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="id_usuarioKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="pass">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="passKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="perfil">
         </Component>

@@ -49,7 +49,16 @@ execute sp_asignatura('FDE115','FUNDAMENTOS DE ECONOMIA',null,null,null,4,null,n
 
 -- FIN DE LOS DATOS DE LA TABLA ASIGNATURA
 
-
+-- retorna las materias para usarlas en los prerrequisitos
+CREATE OR REPLACE PROCEDURE sp_asignatura_retornar1
+(
+    datos OUT SYS_REFCURSOR
+)
+AS
+BEGIN
+    open datos for
+    select codigo_asignatura from asignatura;
+END sp_asignatura_retornar1;
 
 --retorna los prerrequisitos para eliminarlos
 

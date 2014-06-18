@@ -58,6 +58,7 @@ public class usuario extends javax.swing.JFrame {
             conn.close();
         }
         catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -88,6 +89,18 @@ public class usuario extends javax.swing.JFrame {
         jLabel3.setText("Contraseña :");
 
         jLabel4.setText("Perfil de usuario :");
+
+        id_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                id_usuarioKeyTyped(evt);
+            }
+        });
+
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                passKeyTyped(evt);
+            }
+        });
 
         guardar_usuario.setText("Guardar");
         guardar_usuario.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +189,7 @@ public class usuario extends javax.swing.JFrame {
             else
             {
                 CallableStatement sp ;
-                sp = conn.prepareCall("call sp_usuario(?,?,?)");
+                sp = conn.prepareCall("call sp_usuario_insertar(?,?,?)");
                 sp.setString("id_usuario1", id_usuario.getText().toString() );
                 sp.setInt("id_perfil1", objeto.getCodigo() );
                 sp.setString("pass1", pass.getText().toString() );
@@ -188,14 +201,29 @@ public class usuario extends javax.swing.JFrame {
 
                 sp.close();
                 conn.close();
+                
+                this.dispose();
+                new usuario().setVisible(true);
+                
             }
             
             
         }catch(Exception e){
+            e.printStackTrace();
         }
         
         
     }//GEN-LAST:event_guardar_usuarioActionPerformed
+
+    private void id_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_usuarioKeyTyped
+        // TODO add your handling code here:
+        if(id_usuario.getText().length()>=9) evt.consume();
+    }//GEN-LAST:event_id_usuarioKeyTyped
+
+    private void passKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyTyped
+        // TODO add your handling code here:
+        if(pass.getText().length()>=19) evt.consume();
+    }//GEN-LAST:event_passKeyTyped
 
     /**
      * @param args the command line arguments

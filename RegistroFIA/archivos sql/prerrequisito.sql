@@ -18,11 +18,15 @@ FOR EACH ROW
 DECLARE
 total integer;
 BEGIN
-    select count(*) into total from prerrequisito where CODIGO_ASIGNATURA = :new.codigo_asignatura
-    and MATERIA_RREQUISITO = :new.MATERIA_RREQUISITO;
-    IF total > 0  THEN
-       raise_application_error (-20600, 'La asignatura ' || :new.codigo_asignatura || ' ya tiene como requisito ' || :new.materia_rrequisito || ' ' );
-     END IF;
+	IF :new.codigo_asignatura != :new.materia_rrequisito THEN
+      select count(*) into total from prerrequisito where CODIGO_ASIGNATURA = :new.codigo_asignatura
+      and MATERIA_RREQUISITO = :new.MATERIA_RREQUISITO;
+      IF total > 0  THEN
+         raise_application_error (-20600, 'La asignatura ' || :new.codigo_asignatura || ' ya tiene como requisito ' || :new.materia_rrequisito || ' ' );
+      END IF;
+  ELSE
+      raise_application_error (-20600, 'La asignatura ' || :new.codigo_asignatura || ' NO puede ser requisito de ella misma ' );
+  END IF;
 END;
 
 
@@ -73,7 +77,7 @@ END sp_prerrequisito_eliminar;
 
 --procedimiento que retorna las asignaturas a usar para los prerrequisitos
 
-CREATE OR REPLACE PROCEDURE sp_asignatura_retornar
+CREATE OR REPLACE PROCEDURE sp_asignatura_retornar2
 (
     datos OUT SYS_REFCURSOR
 )
@@ -81,7 +85,7 @@ AS
 BEGIN
     open datos for
     select distinct(codigo_asignatura) from prerrequisito;
-END sp_asignatura_retornar;
+END sp_asignatura_retornar2;
 
 
 

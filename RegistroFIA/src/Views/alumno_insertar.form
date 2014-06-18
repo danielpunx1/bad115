@@ -250,6 +250,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="carnet">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="carnetKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
@@ -262,8 +265,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="nombres">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nombresKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="apellidos">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="apellidosKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -276,6 +285,9 @@
                   <Format format="dd-MM-yyyy" subtype="-1" type="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fecha_nacKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -306,6 +318,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="email">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="emailKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
@@ -313,6 +328,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tipo_sangre">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tipo_sangreKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
@@ -320,6 +338,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="madre">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="madreKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="num_emergencia">
               <Properties>
@@ -329,6 +350,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="num_emergenciaActionPerformed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="num_emergenciaKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
@@ -342,6 +364,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="padre">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="padreKeyTyped"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

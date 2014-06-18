@@ -5,13 +5,13 @@
  */
 
 package Views;
+import java.awt.event.KeyEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import oracle.jdbc.OracleTypes;
 import javax.swing.JOptionPane;
-
+import oracle.jdbc.OracleTypes;
 import registrofia.OracleConnection;
 import registrofia.combos_procedimientos;
 /**
@@ -55,6 +55,7 @@ public class alumno_insertar extends javax.swing.JFrame {
             conn.close();
         }
         catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -128,13 +129,36 @@ public class alumno_insertar extends javax.swing.JFrame {
 
         jLabel2.setText("Carnet :");
 
+        carnet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                carnetKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Nombres :");
 
         jLabel4.setText("Apellidos :");
 
+        nombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombresKeyTyped(evt);
+            }
+        });
+
+        apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apellidosKeyTyped(evt);
+            }
+        });
+
         jLabel5.setText("Fecha de nacimiento :");
 
         fecha_nac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd-MM-yyyy"))));
+        fecha_nac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fecha_nacKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Direccion :");
 
@@ -145,9 +169,27 @@ public class alumno_insertar extends javax.swing.JFrame {
 
         jLabel7.setText("Email :");
 
+        email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                emailKeyTyped(evt);
+            }
+        });
+
         jLabel8.setText("Tipo de sangre :");
 
+        tipo_sangre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tipo_sangreKeyTyped(evt);
+            }
+        });
+
         jLabel9.setText("Numero emergencia :");
+
+        madre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                madreKeyTyped(evt);
+            }
+        });
 
         try {
             num_emergencia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
@@ -159,10 +201,21 @@ public class alumno_insertar extends javax.swing.JFrame {
                 num_emergenciaActionPerformed(evt);
             }
         });
+        num_emergencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                num_emergenciaKeyTyped(evt);
+            }
+        });
 
         jLabel10.setText("Nombre madre :");
 
         jLabel11.setText("Nombre padre :");
+
+        padre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                padreKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -360,12 +413,87 @@ public class alumno_insertar extends javax.swing.JFrame {
 
                 sp.close();
                 conn.close();
+                
+                this.dispose();
+                new alumno_insertar().setVisible(true);
             }
             
             
         }catch(Exception e){
+            e.printStackTrace();
         }
     }//GEN-LAST:event_guardarActionPerformed
+
+    private void nombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresKeyTyped
+        // TODO add your handling code here:
+        if(nombres.getText().length()>=49) evt.consume();
+        char car = evt.getKeyChar();    
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE) && (car!=(char)KeyEvent.VK_BACK_SPACE) )
+        {
+           evt.consume();
+        }
+    }//GEN-LAST:event_nombresKeyTyped
+
+    private void apellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosKeyTyped
+        // TODO add your handling code here:
+        if(apellidos.getText().length()>=49) evt.consume();
+        
+        char car = evt.getKeyChar();    
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE) && (car!=(char)KeyEvent.VK_BACK_SPACE) )
+        {
+           evt.consume();
+        }
+    }//GEN-LAST:event_apellidosKeyTyped
+
+    private void carnetKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_carnetKeyTyped
+        // TODO add your handling code here:
+        if(carnet.getText().length()>=7) evt.consume();
+    }//GEN-LAST:event_carnetKeyTyped
+
+    private void fecha_nacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fecha_nacKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if(fecha_nac.getText().length()>=10) evt.consume();
+        if((car<'0' || car>'9') && car != '-' && car != '/') evt.consume();
+    }//GEN-LAST:event_fecha_nacKeyTyped
+
+    private void emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyTyped
+        // TODO add your handling code here:
+        if(email.getText().length()>=40) evt.consume();
+    }//GEN-LAST:event_emailKeyTyped
+
+    private void tipo_sangreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tipo_sangreKeyTyped
+        // TODO add your handling code here:
+        if(tipo_sangre.getText().length()>=4) evt.consume();
+    }//GEN-LAST:event_tipo_sangreKeyTyped
+
+    private void num_emergenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_num_emergenciaKeyTyped
+        // TODO add your handling code here:
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+    }//GEN-LAST:event_num_emergenciaKeyTyped
+
+    private void madreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_madreKeyTyped
+        // TODO add your handling code here:
+        if(madre.getText().length()>=49) evt.consume();
+        
+        char car = evt.getKeyChar();    
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE) && (car!=(char)KeyEvent.VK_BACK_SPACE) )
+        {
+           evt.consume();
+        }
+    }//GEN-LAST:event_madreKeyTyped
+
+    private void padreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_padreKeyTyped
+        // TODO add your handling code here:
+        if(padre.getText().length()>=49) evt.consume();
+        
+        char car = evt.getKeyChar();    
+        if((car<'a' || car>'z') && (car<'A' || car>'Z') && (car!=(char)KeyEvent.VK_SPACE) && (car!=(char)KeyEvent.VK_BACK_SPACE) )
+        {
+           evt.consume();
+        }
+    }//GEN-LAST:event_padreKeyTyped
 
     /**
      * @param args the command line arguments

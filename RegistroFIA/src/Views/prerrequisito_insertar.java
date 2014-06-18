@@ -34,7 +34,7 @@ public class prerrequisito_insertar extends javax.swing.JFrame {
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_asignatura_retornar(?); end;";
+            String sql="begin sp_asignatura_retornar1(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -163,6 +163,9 @@ public class prerrequisito_insertar extends javax.swing.JFrame {
 
                 sp.close();
                 conn.close();
+            
+            this.dispose();
+            new prerrequisito_insertar().setVisible(true);
      
         }catch(Exception e){
         }

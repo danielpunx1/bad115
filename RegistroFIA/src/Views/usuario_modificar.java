@@ -59,6 +59,12 @@ public class usuario_modificar extends javax.swing.JFrame {
 
         log.setText("Login de usuario :");
 
+        id_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                id_usuarioKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -88,6 +94,12 @@ public class usuario_modificar extends javax.swing.JFrame {
         mod_datos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mod_datosActionPerformed(evt);
+            }
+        });
+
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                passKeyTyped(evt);
             }
         });
 
@@ -201,13 +213,27 @@ public class usuario_modificar extends javax.swing.JFrame {
 
                 sp.close();
                 conn.close();
+                
+                this.dispose();
+                new usuario_modificar().setVisible(true);
             }
             
             
         }catch(Exception e){
+            e.printStackTrace();
         }
         
     }//GEN-LAST:event_mod_datosActionPerformed
+
+    private void id_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_id_usuarioKeyTyped
+        // TODO add your handling code here:
+        if(id_usuario.getText().length()>=9) evt.consume();
+    }//GEN-LAST:event_id_usuarioKeyTyped
+
+    private void passKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyTyped
+        // TODO add your handling code here:
+        if(pass.getText().length()>=19) evt.consume();
+    }//GEN-LAST:event_passKeyTyped
 
     /**
      * @param args the command line arguments

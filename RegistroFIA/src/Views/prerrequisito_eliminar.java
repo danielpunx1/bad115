@@ -35,7 +35,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_asignatura_retornar(?); end;";
+            String sql="begin sp_asignatura_retornar2(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -169,6 +169,9 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
 
                 sp.close();
                 conn.close();
+                
+                this.dispose();
+                new prerrequisito_eliminar().setVisible(true);
      
         }catch(Exception e){
         }
@@ -179,6 +182,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
         Connection conn = null;
         OracleConnection c = new OracleConnection();
         
+        requisito.removeAllItems();
         combos_procedimientos objeto3 = (combos_procedimientos) materia.getSelectedItem();
         
         try{

@@ -43,7 +43,7 @@ as
 begin
   if carnet1 != 'NO' THEN
       open datos for
-      select carnet,nombres,apellidos,fecha_nac,direccion,email,tipo_sangre,num_emergencia,nombre_madre,nombre_padre 
+      select carnet,nombres,apellidos,to_char(fecha_nac,'DD/MM/YYYY') as f,direccion,email,tipo_sangre,num_emergencia,nombre_madre,nombre_padre 
       from alumno where carnet = carnet1;
   ELSE
       open datos for
