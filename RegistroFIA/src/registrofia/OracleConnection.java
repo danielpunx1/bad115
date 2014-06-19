@@ -26,7 +26,7 @@ public class OracleConnection {
     public static String getUsr() {
         return usr;
     }
-
+//hhhhhhhhhhhhhhhhhhhhhh
     public static void setUsr(String usr) {
         OracleConnection.usr = usr;
     }
