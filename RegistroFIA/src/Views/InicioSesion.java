@@ -127,7 +127,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
                 System.out.println(OracleConnection.getUsr() + " " + OracleConnection.getPsw());
                 this.dispose();
-                new MainMenu().setVisible(true);
+                new MainMenu(jTextField1.getText().toString()).setVisible(true);
             } else {
                 //ResultSet is empty
                 JOptionPane.showMessageDialog(null, "Combinación \"usuario / contraseña\" incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -1,5 +1,5 @@
 
-CREATE SEQUENCE id_evaluaciones 
+CREATE SEQUENCE id_evaluaciones_insert 
 START WITH 1
 INCREMENT BY 1;
 
@@ -31,5 +31,30 @@ BEGIN
          raise_application_error (-20600, 'Error el porcentaje supero el 100%. Porcentaje disponible : ' || ( :new.porcentaje_evaluacion - ((porcentotal + :new.porcentaje_evaluacion)-1)) || ' ' ); 
     END IF;
 END;
+
+
+EXECUTE sp_evaluaciones_insert('MTE115',1,0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',2,0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',3,0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',4,0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',5,0.20);
+
+EXECUTE sp_evaluaciones_insert('MAT115',1,0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',2,0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',3,0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',4,0.25);
+
+EXECUTE sp_evaluaciones_insert('IAI115',1,0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',2,0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',3,0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',4,0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',5,0.10);
+EXECUTE sp_evaluaciones_insert('IAI115',6,0.10);
+
+EXECUTE sp_evaluaciones_insert('PSI115',1,0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',2,0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',3,0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',4,0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',5,0.20);
 
 

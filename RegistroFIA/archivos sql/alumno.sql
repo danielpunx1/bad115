@@ -67,4 +67,11 @@ BEGIN
 END;
 
 
-
+--RETORNA LOS CARNET DE LOS ALUMNOS PARA HACER .... //ANDERSON
+CREATE OR REPLACE PROCEDURE sp_alumno_carnet(
+	datos out SYS_REFCURSOR
+)
+AS
+BEGIN
+	OPEN datos FOR SELECT carnet FROM alumno;
+END sp_alumno_carnet;

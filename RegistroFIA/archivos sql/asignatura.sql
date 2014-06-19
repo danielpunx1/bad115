@@ -75,3 +75,34 @@ END sp_pre_ret_eliminar;
 
 
 
+
+
+
+--ACTUALIZA LOS DATOS DE LAS ASIGNATURAS //GEOVA
+
+create or replace procedure sp_asignatura_update
+(
+    codigo_asignatura1 IN asignatura.codigo_asignatura%type,
+    nombre_asignatura1 IN asignatura.nombre_asignatura%TYPE,
+    generalidades1 IN asignatura.generalidades%type,
+    descripcion1 IN asignatura.descripcion%type,
+    objetivo1 IN asignatura.objetivo%type,
+    uv_asignatura1 IN asignatura.uv_asignatura%type,
+    bibliografia1 IN asignatura.bibliografia%type,
+    justificacion1 IN asignatura.justificacion%type,
+    recurso_lab1 IN asignatura.recurso_lab%type,
+    recurso_tecnologico1 IN asignatura.recurso_tecnologico%type,
+    recurso_otros1 IN asignatura.recurso_otros%type,
+    perfil_docente1 IN asignatura.perfil_docente%type,
+    visto_bueno1 IN asignatura.visto_bueno%type,
+    aprobacion1 IN asignatura.aprobacion%type
+)
+IS
+BEGIN
+    UPDATE asignatura
+    SET nombre_asignatura=nombre_asignatura1,generalidades=generalidades1,descripcion=descripcion1,objetivo=objetivo1,uv_asignatura=uv_asignatura1,
+    bibliografia=bibliografia1,justificacion=justificacion1,recurso_lab=recurso_lab1,recurso_tecnologico=recurso_tecnologico1,recurso_otros=recurso_otros1,
+    perfil_docente=perfil_docente1,visto_bueno=visto_bueno1,aprobacion=aprobacion1
+    where asignatura.codigo_asignatura=codigo_asignatura1;
+END sp_asignatura_update;
+

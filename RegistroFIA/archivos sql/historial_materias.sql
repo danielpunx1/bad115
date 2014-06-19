@@ -25,6 +25,31 @@ END sp_historial_materias;
 
 --trigger q calcula si la lleva en primera o en segunda DANIEL
 
+--CREATE OR REPLACE TRIGGER matricula_materia
+--BEFORE INSERT ON historial_materias
+--FOR EACH ROW
+--DECLARE 
+--total integer;
+--ciclos integer;
+--cursada integer;
+--BEGIN 
+-- select count(*) into cursada from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA 
+-- and num_expediente = :new.num_expediente and estado='en curso' or estado='aprobada';
+-- IF cursada < 1 THEN
+--     select count(*) into total from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA
+--     and num_expediente = :new.num_expediente and estado='reprobada';
+--     :new.matricula := (total+1);
+--     select pensum.ciclo into ciclos from pensum where pensum.codigo_asignatura = :new.CODIGO_ASIGNATURA;
+--     :new.ciclo := ciclos;
+--     IF :new.matricula > 4  THEN
+--       raise_application_error (-20600, 'La materia ' || :new.codigo_asignatura || ' ya fue reprobada 3 veces' );
+--     END IF;
+-- ELSE
+--     raise_application_error (-20600,'La materia ' || :new.codigo_asignatura || ' ya fue aprobada o se encuentra en curso');
+-- END IF;
+--END;
+
+
 CREATE OR REPLACE TRIGGER matricula_materia
 BEFORE INSERT ON historial_materias
 FOR EACH ROW
@@ -32,25 +57,50 @@ DECLARE
 total integer;
 ciclos integer;
 cursada integer;
+requisitos integer;
+cumple_requisito integer;
 BEGIN 
  select count(*) into cursada from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA 
  and num_expediente = :new.num_expediente and estado='en curso' or estado='aprobada';
- IF cursada < 1 THEN
-     select count(*) into total from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA
-     and num_expediente = :new.num_expediente and estado='reprobada';
-     :new.matricula := (total+1);
-     select pensum.ciclo into ciclos from pensum where pensum.codigo_asignatura = :new.CODIGO_ASIGNATURA;
-     :new.ciclo := ciclos;
-     IF :new.matricula > 4  THEN
-       raise_application_error (-20600, 'La materia ' || :new.codigo_asignatura || ' ya fue reprobada 3 veces' );
-     END IF;
+ 
+ select count(*) into requisitos from prerrequisito where codigo_asignatura = :new.codigo_asignatura;
+ 
+ IF requisitos != 0 THEN
+       select count(*) into cumple_requisito from HISTORIAL_MATERIAS where codigo_asignatura 
+       IN ( select materia_rrequisito from prerrequisito where codigo_asignatura = :new.codigo_asignatura) 
+       and estado = 'aprobada';
+       
+       IF requisitos != cumple_requisito THEN
+               raise_application_error (-20600,'Debe tener aprobadas todas las materias requisito para poder inscribir : ' || :new.codigo_asignatura || ' ');
+       ELSE
+               IF cursada < 1 THEN
+                   select count(*) into total from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA
+                   and num_expediente = :new.num_expediente and estado='reprobada';
+                   :new.matricula := (total+1);
+                   select pensum.ciclo into ciclos from pensum where pensum.codigo_asignatura = :new.CODIGO_ASIGNATURA;
+                   :new.ciclo := ciclos;
+                   IF :new.matricula > 4  THEN
+                     raise_application_error (-20600, 'La materia ' || :new.codigo_asignatura || ' ya fue reprobada 3 veces' );
+                   END IF;
+               ELSE
+                   raise_application_error (-20600,'La materia ' || :new.codigo_asignatura || ' ya fue aprobada o se encuentra en curso');
+               END IF;
+       END IF;
  ELSE
-     raise_application_error (-20600,'La materia ' || :new.codigo_asignatura || ' ya fue aprobada o se encuentra en curso');
+       IF cursada < 1 THEN
+            select count(*) into total from historial_materias where CODIGO_ASIGNATURA = :new.CODIGO_ASIGNATURA
+            and num_expediente = :new.num_expediente and estado='reprobada';
+            :new.matricula := (total+1);
+            select pensum.ciclo into ciclos from pensum where pensum.codigo_asignatura = :new.CODIGO_ASIGNATURA;
+            :new.ciclo := ciclos;
+            IF :new.matricula > 4  THEN
+                 raise_application_error (-20600, 'La materia ' || :new.codigo_asignatura || ' ya fue reprobada 3 veces' );
+            END IF;
+       ELSE
+                 raise_application_error (-20600,'La materia ' || :new.codigo_asignatura || ' ya fue aprobada o se encuentra en curso');
+       END IF;
  END IF;
 END;
-
-
-
 
 
 -- calcula la nota despues de insertar en NOTAS_CICLO   DANIEL
@@ -67,7 +117,17 @@ BEGIN
 END;
 
 
-
+--RETORNA EL HISTORIAL DE MATERIAS DE X ALUMNO
+CREATE OR REPLACE PROCEDURE sp_h_materias_recuperar(
+	datos out SYS_REFCURSOR,
+	icarnet in ALUMNO.CARNET%TYPE
+)
+AS
+BEGIN
+	OPEN datos FOR SELECT ex.carnet, hm.codigo_asignatura, hm.matricula, hm.nota_final, hm.estado, hm.year_ciclo 
+	FROM historial_materias hm INNER JOIN expediente ex
+		ON hm.NUM_EXPEDIENTE=ex.NUM_EXPEDIENTE WHERE ex.CARNET=icarnet;
+END sp_h_materias_recuperar;
 
 
 

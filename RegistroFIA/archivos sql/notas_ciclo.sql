@@ -5,15 +5,24 @@ CREATE SEQUENCE Id_Notas
 START WITH 1
 INCREMENT BY 1;
 
-CREATE OR REPLACE PROCEDURE SP_Nota_Ciclo
+create or replace PROCEDURE sp_nota_ciclo_insert
 (
-  id_eval IN NOTAS_CICLO.ID_EVALUACION%TYPE,
-  id_histo IN NOTAS_CICLO.ID_HISTORIAL%TYPE,
-  notax IN NOTAS_CICLO.NOTA%TYPE)
+    CARNET IN ALUMNO.CARNET%TYPE,CODIGO_MAT IN varchar2,
+    EVAL IN EVALUACIONES.EVALUACION%TYPE,notax IN NOTAS_CICLO.NOTA%TYPE
+)
 IS
+  id_eval number;
+  id_histo number;
 BEGIN
-  INSERT INTO NOTAS_CICLO(ID_NOTA,ID_EVALUACION,ID_HISTORIAL,NOTA,FECHA_NOTA)VALUES(Id_Notas.nextval,id_eval,id_histo,notax,sysdate);
-END SP_Nota_Ciclo;
+    SELECT id_evaluacion into id_eval FROM EVALUACIONES E
+    WHERE E.CODIGO_ASIGNATURA=CODIGO_MAT AND E.EVALUACION=EVAL;
+
+    SELECT ID_HISTORIAL INTO id_histo FROM EXPEDIENTE E
+    INNER JOIN HISTORIAL_MATERIAS HM ON E.NUM_EXPEDIENTE=HM.NUM_EXPEDIENTE
+    WHERE E.CARNET=CARNET AND HM.CODIGO_ASIGNATURA=CODIGO_MAT;
+
+    INSERT INTO NOTAS_CICLO(ID_NOTA,ID_EVALUACION,ID_HISTORIAL,NOTA)VALUES(Id_Notas.nextval,id_eval,id_histo,notax);
+END sp_nota_ciclo_insert;
 
 
 
@@ -33,4 +42,37 @@ BEGIN
 END;
 
 
+--RECUPERA LAS NOTAS DE UN ALUMNO X //ANDERSON
+CREATE OR REPLACE PROCEDURE sp_notas_ciclo_recuperar(
+	datos out SYS_REFCURSOR,
+	icarnet in ALUMNO.CARNET%TYPE
+)
+AS
+BEGIN
+	OPEN datos FOR SELECT ex.carnet, ev.codigo_asignatura, ev.evaluacion, ev.porcentaje_evaluacion, nc.nota, nc.fecha_nota FROM notas_ciclo nc INNER JOIN evaluaciones ev
+		ON nc.ID_EVALUACION=ev.ID_EVALUACION INNER JOIN historial_materias hm
+		ON nc.ID_HISTORIAL=hm.ID_HISTORIAL INNER JOIN expediente ex
+		ON hm.NUM_EXPEDIENTE=ex.NUM_EXPEDIENTE WHERE ex.CARNET=icarnet ORDER BY ev.codigo_asignatura ASC, ev.evaluacion ASC;
+END sp_notas_ciclo_recuperar;
 
+
+--ACTUALIZA LOS DATOS DE LAS NOTAS //GEOVA
+create or replace PROCEDURE sp_nota_ciclo_update
+(
+    CARNETx IN ALUMNO.CARNET%TYPE,CODIGO_MAT IN varchar2,
+    EVAL IN EVALUACIONES.EVALUACION%TYPE,notax IN NOTAS_CICLO.NOTA%TYPE
+)
+IS
+    id_eval number;
+    id_histo number;
+BEGIN
+    SELECT id_evaluacion into id_eval FROM EVALUACIONES E
+    WHERE E.CODIGO_ASIGNATURA=CODIGO_MAT AND E.EVALUACION=EVAL;
+
+    SELECT ID_HISTORIAL INTO id_histo FROM EXPEDIENTE E
+    INNER JOIN HISTORIAL_MATERIAS HM ON E.NUM_EXPEDIENTE=HM.NUM_EXPEDIENTE
+    WHERE E.CARNET=CARNETx AND HM.CODIGO_ASIGNATURA=CODIGO_MAT;
+
+    UPDATE NOTAS_CICLO nt
+    SET NOTA=notax where nt.ID_HISTORIAL= id_histo and nt.ID_EVALUACION=id_eval;
+END sp_nota_ciclo_update;
