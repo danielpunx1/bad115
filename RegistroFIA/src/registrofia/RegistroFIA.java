@@ -5,6 +5,9 @@
 package registrofia;
 
 import Views.InicioSesion;
+import com.alee.laf.WebLookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -17,6 +20,15 @@ public class RegistroFIA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new InicioSesion().setVisible(true);
+        try {
+            WebLookAndFeel.setDecorateAllWindows(true);
+            UIManager.setLookAndFeel(new WebLookAndFeel());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        }
+        
+        InicioSesion ini = new InicioSesion();
+        ini.setLocationRelativeTo(null);
+        ini.setVisible(true);
     }
 }

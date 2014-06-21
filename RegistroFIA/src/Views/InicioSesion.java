@@ -41,6 +41,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iniciar sesión");
+        setUndecorated(true);
 
         jLabel1.setText("ID Usuario:");
 
@@ -92,7 +93,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -124,10 +125,12 @@ public class InicioSesion extends javax.swing.JFrame {
             if (rs.next()) {
                 OracleConnection.setUsr(jTextField1.getText().toString());
                 OracleConnection.setPsw(jPasswordField1.getText().toString());
-                System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
-                System.out.println(OracleConnection.getUsr() + " " + OracleConnection.getPsw());
+                //System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
+                //System.out.println(OracleConnection.getUsr() + " " + OracleConnection.getPsw());
                 this.dispose();
-                new MainMenu(jTextField1.getText().toString()).setVisible(true);
+                MainMenu main = new MainMenu(jTextField1.getText().toString());
+                main.setLocationRelativeTo(null);
+                main.setVisible(true);
             } else {
                 //ResultSet is empty
                 JOptionPane.showMessageDialog(null, "Combinación \"usuario / contraseña\" incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);

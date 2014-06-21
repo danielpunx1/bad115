@@ -60,7 +60,7 @@ public class ConsultarNotas extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_recuperar_carnets(?); END;";
+            String query = "BEGIN sp_alumno_carnet(?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
 
@@ -159,7 +159,7 @@ public class ConsultarNotas extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_recuperar_notas_ciclo(?,?); END;";
+            String query = "BEGIN sp_notas_ciclo_recuperar(?,?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
             
