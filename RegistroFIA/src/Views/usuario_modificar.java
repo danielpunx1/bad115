@@ -16,7 +16,7 @@ import registrofia.OracleConnection;
 import registrofia.combos_procedimientos;
 /**
  *
- * @author daniel
+ * @author daniel PRUEBA DE COMMIT PULL Y ERRORES GEOVA
  */
 public class usuario_modificar extends javax.swing.JFrame {
 
