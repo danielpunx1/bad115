@@ -4,19 +4,13 @@
  */
 package Views;
 
-import java.awt.BorderLayout;
+import static Views.ConsultarNotas.buildTableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Vector;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
 import registrofia.OracleConnection;
 
@@ -24,69 +18,14 @@ import registrofia.OracleConnection;
  *
  * @author anderson
  */
-public class ConsultarNotas extends javax.swing.JFrame {
+public class InscribirAsignaturas extends javax.swing.JFrame {
 
     /**
-     * Creates new form ConsultarNotas
+     * Creates new form InscribirAsignaturas
      */
-    public static DefaultTableModel buildTableModel(ResultSet rs)
-            throws SQLException {
-
-        ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
-    public ConsultarNotas() throws SQLException {
+    public InscribirAsignaturas() {
         initComponents();
-        OracleConnection oc = new OracleConnection();
-        Connection conn = null;
-        //Statement stmt = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = oc.getConnection();
-            
-            String query = "BEGIN sp_alumno_carnet(?); END;";
-            CallableStatement cs;
-            cs = conn.prepareCall(query);
-
-            cs.registerOutParameter(1, OracleTypes.CURSOR);
-            cs.execute();
-            
-            rs = (ResultSet)cs.getObject(1);
-            
-            while (rs.next()) {
-                jComboBox1.addItem(rs.getString("carnet"));
-            }
-        } catch (Exception e) {
-            // handle the exception
-            e.printStackTrace();
-            System.err.println(e.getMessage());
-        } finally {
-            try {
-                rs.close();
-                //stmt.close();
-                conn.close();
-            } catch (Exception ee) {
-                ee.printStackTrace();
-            }
-        }
+        jTextField1.setText(OracleConnection.getUsr());
     }
 
     /**
@@ -99,26 +38,28 @@ public class ConsultarNotas extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consultar Notas");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Carnet:");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        jTextField1.setEnabled(false);
 
-        jButton1.setText("Obtener notas");
+        jButton1.setText("Ver asignaturas cursadas durante el ciclo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Asignaturas disponibles:");
+
+        jButton2.setText("Inscribir materia");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,11 +67,19 @@ public class ConsultarNotas extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -139,17 +88,18 @@ public class ConsultarNotas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -161,11 +111,11 @@ public class ConsultarNotas extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_notas_ciclo_recuperar(?,?); END;";
+            String query = "BEGIN sp_h_materias_recuperar(?,?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
             
-            cs.setString(2, jComboBox1.getSelectedItem().toString());
+            cs.setString(2, OracleConnection.getUsr());
             cs.registerOutParameter(1, OracleTypes.CURSOR);
             
             cs.execute();
@@ -178,7 +128,7 @@ public class ConsultarNotas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, new JScrollPane(table, 
                     JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
                     JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS), "estudiante@" 
-                    + jComboBox1.getSelectedItem().toString(), JOptionPane.PLAIN_MESSAGE);
+                    + OracleConnection.getUsr(), JOptionPane.PLAIN_MESSAGE);
         } catch (Exception e) {
             // handle the exception
             e.printStackTrace();
@@ -211,26 +161,29 @@ public class ConsultarNotas extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultarNotas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InscribirAsignaturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultarNotas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InscribirAsignaturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultarNotas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InscribirAsignaturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultarNotas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InscribirAsignaturas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new ConsultarNotas().setVisible(true);
+                new InscribirAsignaturas().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

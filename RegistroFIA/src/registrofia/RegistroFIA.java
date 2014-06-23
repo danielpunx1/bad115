@@ -5,6 +5,7 @@
 package registrofia;
 
 import Views.InicioSesion;
+import Views.expediente_insertar;
 import com.alee.laf.WebLookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -26,7 +27,6 @@ public class RegistroFIA {
         } catch (UnsupportedLookAndFeelException e) {
             // handle exception
         }
-        
         InicioSesion ini = new InicioSesion();
         ini.setLocationRelativeTo(null);
         ini.setVisible(true);

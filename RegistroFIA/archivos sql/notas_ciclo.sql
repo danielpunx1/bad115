@@ -24,7 +24,23 @@ BEGIN
     INSERT INTO NOTAS_CICLO(ID_NOTA,ID_EVALUACION,ID_HISTORIAL,NOTA)VALUES(Id_Notas.nextval,id_eval,id_histo,notax);
 END sp_nota_ciclo_insert;
 
+-- ANDERSON INSERTAR NOTAS_CICLO
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MAT115', 1, 8.5);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MAT115', 2, 7.5);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MAT115', 3, 6.5);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MAT115', 4, 9.5);
 
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MTE115', 1, 8);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MTE115', 2, 7);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MTE115', 3, 6);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MTE115', 4, 7);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'MTE115', 5, 9);
+
+EXECUTE sp_nota_ciclo_insert('ru06003', 'PSI115', 1, 8);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'PSI115', 2, 7);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'PSI115', 3, 6);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'PSI115', 4, 7);
+EXECUTE sp_nota_ciclo_insert('ru06003', 'PSI115', 5, 7);
 
 
 -- no deja insertar dos veces la nota para una misma evaluacion   DANIEL

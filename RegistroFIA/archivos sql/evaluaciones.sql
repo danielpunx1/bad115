@@ -33,28 +33,28 @@ BEGIN
 END;
 
 
-EXECUTE sp_evaluaciones_insert('MTE115',1,0.20);
-EXECUTE sp_evaluaciones_insert('MTE115',2,0.20);
-EXECUTE sp_evaluaciones_insert('MTE115',3,0.20);
-EXECUTE sp_evaluaciones_insert('MTE115',4,0.20);
-EXECUTE sp_evaluaciones_insert('MTE115',5,0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',0.20);
+EXECUTE sp_evaluaciones_insert('MTE115',0.20);
 
-EXECUTE sp_evaluaciones_insert('MAT115',1,0.25);
-EXECUTE sp_evaluaciones_insert('MAT115',2,0.25);
-EXECUTE sp_evaluaciones_insert('MAT115',3,0.25);
-EXECUTE sp_evaluaciones_insert('MAT115',4,0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',0.25);
+EXECUTE sp_evaluaciones_insert('MAT115',0.25);
 
-EXECUTE sp_evaluaciones_insert('IAI115',1,0.20);
-EXECUTE sp_evaluaciones_insert('IAI115',2,0.20);
-EXECUTE sp_evaluaciones_insert('IAI115',3,0.20);
-EXECUTE sp_evaluaciones_insert('IAI115',4,0.20);
-EXECUTE sp_evaluaciones_insert('IAI115',5,0.10);
-EXECUTE sp_evaluaciones_insert('IAI115',6,0.10);
+EXECUTE sp_evaluaciones_insert('IAI115',0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',0.20);
+EXECUTE sp_evaluaciones_insert('IAI115',0.10);
+EXECUTE sp_evaluaciones_insert('IAI115',0.10);
 
-EXECUTE sp_evaluaciones_insert('PSI115',1,0.20);
-EXECUTE sp_evaluaciones_insert('PSI115',2,0.20);
-EXECUTE sp_evaluaciones_insert('PSI115',3,0.20);
-EXECUTE sp_evaluaciones_insert('PSI115',4,0.20);
-EXECUTE sp_evaluaciones_insert('PSI115',5,0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',0.20);
+EXECUTE sp_evaluaciones_insert('PSI115',0.20);
 
 
