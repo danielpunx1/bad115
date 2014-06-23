@@ -26,6 +26,38 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
     public InscribirAsignaturas() {
         initComponents();
         jTextField1.setText(OracleConnection.getUsr());
+        
+        Connection conn = null;
+        ResultSet rs = null;
+        OracleConnection c = new OracleConnection();
+
+        try {
+            conn = c.getConnection();
+            String sql = "BEGIN sp_h_materias_inscripciones(?,?); END;";
+
+            CallableStatement sp;
+            sp = conn.prepareCall(sql);
+            
+            sp.registerOutParameter(1, OracleTypes.CURSOR);
+            sp.setString(2, jTextField1.getText());
+            sp.execute();
+            
+            rs = (ResultSet)sp.getObject(1);
+            
+            String item = "";
+            while(rs.next()){
+                item = rs.getString("codigo_asignatura");
+                jComboBox1.addItem(item);
+            }
+            
+            rs.close();
+            sp.close();
+            conn.close();
+        } catch (Exception e) {
+            // handle the exception
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        }
     }
 
     /**
@@ -58,6 +90,12 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         });
 
         jLabel2.setText("Asignaturas disponibles:");
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Inscribir materia");
 
@@ -143,6 +181,10 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
