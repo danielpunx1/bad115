@@ -8,6 +8,7 @@ import static Views.ConsultarNotas.buildTableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,7 +26,8 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
      */
     public InscribirAsignaturas() {
         initComponents();
-        jTextField1.setText(OracleConnection.getUsr());
+        String str = OracleConnection.getUsr();
+        jTextField1.setText(str);
         
         Connection conn = null;
         ResultSet rs = null;
@@ -39,17 +41,24 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
             sp = conn.prepareCall(sql);
             
             sp.registerOutParameter(1, OracleTypes.CURSOR);
-            sp.setString(2, jTextField1.getText());
+            sp.setString(2, str);
             sp.execute();
             
-            rs = (ResultSet)sp.getObject(1);
-            
-            String item = "";
-            while(rs.next()){
-                item = rs.getString("codigo_asignatura");
-                jComboBox1.addItem(item);
+            rs = (ResultSet) sp.getObject(1);
+
+            // si el while termina y b = 0 el alumno no posee materias que pueda inscribir
+            Integer b = 0;
+            while (rs.next()) {
+                if (rs.getString("disponible").equalsIgnoreCase("si")) {
+                    b = 1;
+                    jComboBox1.addItem(rs.getString("codigo_asignatura"));
+                }
             }
-            
+            if (b == 0) {
+                jComboBox1.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "El alumno " + str
+                        + " no posee materias que pueda inscribir", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             rs.close();
             sp.close();
             conn.close();
@@ -77,6 +86,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inscribir Materias");
 
         jLabel1.setText("Carnet:");
 
@@ -98,6 +108,11 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         });
 
         jButton2.setText("Inscribir materia");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,19 +121,21 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextField1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,14 +143,16 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(225, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -185,6 +204,70 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Connection conn = null;
+        OracleConnection c = new OracleConnection();
+        String usr = OracleConnection.getUsr();
+        Calendar now = Calendar.getInstance();
+        
+        if (jComboBox1.getItemCount() != 0) {
+            // tiene materias para inscribir
+            String codigo_asignatura = jComboBox1.getSelectedItem().toString();
+            Integer num_expediente = 0;
+            float nota_final = 0;
+            String estado = "en curso";
+            Integer matricula = 1;
+            Integer year_ciclo = now.get(Calendar.YEAR);
+            Integer ciclo = 0;
+            try {
+                conn = c.getConnection();
+                String sql = "BEGIN SP_EXPEDIENTE_RECUPERAR(?,?); END;";
+                
+                CallableStatement sp;
+                sp = conn.prepareCall(sql);
+                
+                sp.setString(1, "ru06003");
+                sp.registerOutParameter(2, OracleTypes.CURSOR);
+                sp.execute();
+                
+                //Se obtiene el cursor en forma de ResultSet
+                ResultSet rs = (ResultSet) sp.getObject(2);
+                
+                while (rs.next()) {
+                    num_expediente = Integer.parseInt(rs.getString("num_expediente"));
+                    //System.out.println(num_expediente);
+                }
+                rs.close();
+                sp.close();
+                
+                sql = "BEGIN SP_H_MATERIAS_INSERT(?,?,?,?,?,?,?); END;";
+                sp = conn.prepareCall(sql);
+                
+                sp.setString(1, codigo_asignatura);
+                sp.setInt(2, num_expediente);
+                sp.setFloat(3, nota_final);
+                sp.setInt(4, matricula);
+                sp.setString(5, estado);
+                sp.setInt(6, year_ciclo);
+                sp.setInt(7, ciclo);
+                
+                System.out.println("*" + codigo_asignatura+"*"+num_expediente+"*"+
+                        nota_final+"*"+matricula+"*"+estado+"*"+year_ciclo+"*"+ciclo+"*");
+                
+                sp.execute();
+                
+                rs.close();
+                sp.close();
+                conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            // no tiene materias que pueda inscribir
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
