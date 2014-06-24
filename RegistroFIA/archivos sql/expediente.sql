@@ -1,4 +1,23 @@
 
+CREATE SEQUENCE id_expedientes
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE PROCEDURE sp_expediente_insertar
+(
+    carnet1 IN EXPEDIENTE.CARNET%type,
+    carrera IN EXPEDIENTE.CODIGO_CARRERA%type,
+    uv IN EXPEDIENTE.UV_GANADAS%type default 0,
+    cum1 IN EXPEDIENTE.CUM%type default 0,
+    promedio1 IN EXPEDIENTE.PROMEDIO%type default 0
+)
+IS
+BEGIN
+    INSERT INTO expediente (num_expediente,carnet,codigo_carrera,uv_ganadas,cum,promedio)
+    values (id_expedientes.nextval,carnet1,carrera,uv,cum1,promedio1);
+END sp_expediente_insertar;
+
+
 --CIERRA EL CICLO PARA CALCULAR CUM, PROMEDIO...
 
 CREATE OR REPLACE PROCEDURE sp_cerrar_ciclo(VAR IN INTEGER)

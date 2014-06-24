@@ -152,7 +152,7 @@ public class prerrequisito_insertar extends javax.swing.JFrame {
             conn = c.getConnection();
           
             CallableStatement sp ;
-            sp = conn.prepareCall("call sp_prerrequisito(?,?)");
+            sp = conn.prepareCall("call sp_prerrequisito_insert(?,?)");
             sp.setString("codigo_asignatura1", objeto1.getdato() );
             sp.setString("materia_rrequisito1", objeto2.getdato() );
               

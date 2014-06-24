@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor.sss
  */
 
 package Views;
@@ -16,7 +16,7 @@ import registrofia.OracleConnection;
 import registrofia.combos_procedimientos;
 /**
  *
- * @author daniel
+ * @author daniel PRUEBA DE COMMIT PULL Y ERRORES GEOVA
  */
 public class usuario_modificar extends javax.swing.JFrame {
 

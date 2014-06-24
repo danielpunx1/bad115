@@ -35,7 +35,7 @@ public class usuario extends javax.swing.JFrame {
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_retornar_perfiles(?); end;";
+            String sql="begin sp_perfil_retornar(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);

@@ -35,7 +35,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_asignatura_retornar2(?); end;";
+            String sql="begin sp_asignatura_retornar(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
