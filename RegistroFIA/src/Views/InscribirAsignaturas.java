@@ -35,7 +35,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
 
         try {
             conn = c.getConnection();
-            String sql = "BEGIN sp_h_materias_inscripciones(?,?); END;";
+            String sql = "BEGIN basenotas.sp_h_materias_inscripciones(?,?); END;";
 
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -168,7 +168,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_h_materias_recuperar(?,?); END;";
+            String query = "BEGIN basenotas.sp_h_materias_recuperar(?,?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
             
@@ -223,12 +223,12 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
             Integer ciclo = 0;
             try {
                 conn = c.getConnection();
-                String sql = "BEGIN SP_EXPEDIENTE_RECUPERAR(?,?); END;";
+                String sql = "BEGIN basenotas.SP_EXPEDIENTE_RECUPERAR(?,?); END;";
                 
                 CallableStatement sp;
                 sp = conn.prepareCall(sql);
                 
-                sp.setString(1, "ru06003");
+                sp.setString(1, usr);
                 sp.registerOutParameter(2, OracleTypes.CURSOR);
                 sp.execute();
                 
@@ -242,7 +242,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
                 rs.close();
                 sp.close();
                 
-                sql = "BEGIN SP_H_MATERIAS_INSERT(?,?,?,?,?,?,?); END;";
+                sql = "BEGIN basenotas.SP_H_MATERIAS_INSERT(?,?,?,?,?,?,?); END;";
                 sp = conn.prepareCall(sql);
                 
                 sp.setString(1, codigo_asignatura);
@@ -257,6 +257,14 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
                         nota_final+"*"+matricula+"*"+estado+"*"+year_ciclo+"*"+ciclo+"*");
                 
                 sp.execute();
+                
+                JOptionPane.showMessageDialog(null, "¡¡ Materia inscrita exitosamente !!");
+                jComboBox1.removeItem(codigo_asignatura);
+                
+                if(jComboBox1.getItemCount() == 0){
+                    jComboBox1.setEditable(false);
+                    jButton2.setEnabled(false);
+                }
                 
                 rs.close();
                 sp.close();

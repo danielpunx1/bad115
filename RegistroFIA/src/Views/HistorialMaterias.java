@@ -33,7 +33,7 @@ public class HistorialMaterias extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_alumno_carnet(?); END;";
+            String query = "BEGIN basenotas.sp_alumno_carnet(?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
 
@@ -122,7 +122,7 @@ public class HistorialMaterias extends javax.swing.JFrame {
         try {
             conn = oc.getConnection();
             
-            String query = "BEGIN sp_h_materias_recuperar(?,?); END;";
+            String query = "BEGIN basenotas.sp_h_materias_recuperar(?,?); END;";
             CallableStatement cs;
             cs = conn.prepareCall(query);
             
