@@ -118,6 +118,11 @@ ResultSet rset = null;
         jButton3.setText("Cancelar");
 
         jButton4.setText("Volver");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Carnet");
 
@@ -287,6 +292,13 @@ evt.consume();
 JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los datos", JOptionPane.ERROR_MESSAGE);
 }  // TODO add your handling code here:
     }//GEN-LAST:event_notaKeyTyped
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        menudocente jFrame= new menudocente();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
