@@ -31,7 +31,7 @@ public class HistorialMaterias extends javax.swing.JFrame {
         ResultSet rs = null;
         
         try {
-            conn = oc.getConnection();
+            conn = oc.getConnectionAlumno();
             
             String query = "BEGIN basenotas.sp_alumno_carnet(?); END;";
             CallableStatement cs;
@@ -120,7 +120,7 @@ public class HistorialMaterias extends javax.swing.JFrame {
         ResultSet rs = null;
         
         try {
-            conn = oc.getConnection();
+            conn = oc.getConnectionAlumno();
             
             String query = "BEGIN basenotas.sp_h_materias_recuperar(?,?); END;";
             CallableStatement cs;

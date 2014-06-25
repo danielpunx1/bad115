@@ -34,7 +34,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         OracleConnection c = new OracleConnection();
 
         try {
-            conn = c.getConnection();
+            conn = c.getConnectionAlumno();
             String sql = "BEGIN basenotas.sp_h_materias_inscripciones(?,?); END;";
 
             CallableStatement sp;
@@ -166,7 +166,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
         ResultSet rs = null;
         
         try {
-            conn = oc.getConnection();
+            conn = oc.getConnectionAlumno();
             
             String query = "BEGIN basenotas.sp_h_materias_recuperar(?,?); END;";
             CallableStatement cs;
@@ -222,7 +222,7 @@ public class InscribirAsignaturas extends javax.swing.JFrame {
             Integer year_ciclo = now.get(Calendar.YEAR);
             Integer ciclo = 0;
             try {
-                conn = c.getConnection();
+                conn = c.getConnectionAlumno();
                 String sql = "BEGIN basenotas.SP_EXPEDIENTE_RECUPERAR(?,?); END;";
                 
                 CallableStatement sp;

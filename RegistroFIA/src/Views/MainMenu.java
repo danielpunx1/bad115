@@ -152,7 +152,7 @@ public class MainMenu extends javax.swing.JFrame {
         ResultSet rs = null;
         
         try {
-            conn = oc.getConnection();
+            conn = oc.getConnectionAlumno();
             
             String query = "BEGIN basenotas.sp_cerrar_ciclo(); END;";
             CallableStatement cs;

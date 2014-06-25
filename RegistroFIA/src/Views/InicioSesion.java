@@ -115,7 +115,7 @@ public class InicioSesion extends javax.swing.JFrame {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            conn = oc.getConnection();
+            conn = oc.getConnectionAlumno();
             stmt = conn.createStatement();
             String query = "SELECT id_usuario, pass FROM usuario WHERE id_usuario='" 
                     + jTextField1.getText().toString() + "' AND pass='" 
