@@ -30,7 +30,9 @@ public class Update_Asignatura extends javax.swing.JFrame {
     public Update_Asignatura() {
         initComponents();
           setLocationRelativeTo(null);
-        llenarcombo1();
+          InicioSesion jfra=new InicioSesion();
+          String duidoc= jfra.DuiDocente;
+        llenarcombo1(duidoc);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -504,14 +506,13 @@ JOptionPane.showMessageDialog(null, "No puede ingresar letras", "Error", JOption
     private javax.swing.JTextField uv;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
-public void llenarcombo1(){
+public void llenarcombo1(String duidoc){
             Connection cn = null;
             OracleConnection c = new OracleConnection();
             try {
                 cn= c.getConnectionDocente();
                 cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
-                String dui= "12345";
-                cstm.setString(1,dui);
+                cstm.setString(1,duidoc);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
                 cstm.execute();
                 rset =((OracleCallableStatement) cstm).getCursor(2);

@@ -18,7 +18,7 @@ import registrofia.OracleConnection;
  * @author anderson
  */
 public class InicioSesion extends javax.swing.JFrame {
-
+    String DuiDocente="";
     /**
      * Creates new form InicioSesion
      */
@@ -124,8 +124,10 @@ public class InicioSesion extends javax.swing.JFrame {
             cstm.setString(1,jTextField1.getText());
             cstm.setString(2,jPasswordField1.getText());
             cstm.registerOutParameter(3,OracleTypes.NUMBER );
+            cstm.registerOutParameter(4, OracleTypes.VARCHAR);
             cstm.execute();
             perf=((OracleCallableStatement) cstm).getInt(3);
+            DuiDocente=((OracleCallableStatement) cstm).getString(4);
             if (perf!=0) {
                 OracleConnection.setUsr(jTextField1.getText().toString());
                 OracleConnection.setPsw(jPasswordField1.getText().toString());

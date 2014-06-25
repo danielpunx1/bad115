@@ -34,7 +34,9 @@ ResultSet rset = null;
      */
     public Insertar_Notas() {
         initComponents();
-       llenarcombo1();
+        InicioSesion jfra=new InicioSesion();
+          String duidoc= jfra.DuiDocente;
+            llenarcombo1(duidoc);
          setLocationRelativeTo(null);
        
     }
@@ -352,14 +354,13 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
     private javax.swing.JTextField nota;
     private javax.swing.JButton siguiente;
     // End of variables declaration//GEN-END:variables
-    public void llenarcombo1(){
+    public void llenarcombo1(String duidoc){
         Connection cn = null;
         OracleConnection c = new OracleConnection();
         try {
                 cn= c.getConnectionDocente();
                 cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
-                String dui= "12345";
-                cstm.setString(1,dui);
+                cstm.setString(1,duidoc);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
                 cstm.execute();
                 rset =((OracleCallableStatement) cstm).getCursor(2);
