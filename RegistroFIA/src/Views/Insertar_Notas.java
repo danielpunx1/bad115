@@ -229,7 +229,7 @@ ResultSet rset = null;
             OracleConnection c = new OracleConnection();
              try{
                  cn= c.getConnectionDocente();
-                 cstm = cn.prepareCall("begin notasfia.sp_nota_ciclo_insert(?,?,?,?);end;");
+                 cstm = cn.prepareCall("begin tareabase.sp_nota_ciclo_insert(?,?,?,?);end;");
                  cstm.setString(1,carnet.getText());
                  cstm.setString(2,(String)Asig.getSelectedItem());
                  cstm.setInt(3,(int)Eval.getSelectedItem());
@@ -357,7 +357,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
         OracleConnection c = new OracleConnection();
         try {
                 cn= c.getConnectionDocente();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.OBTENER_DATOS(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
                 String dui= "12345";
                 cstm.setString(1,dui);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -392,7 +392,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
                 cn= c.getConnectionDocente();
                 String codigo="";
                 Eval.removeAllItems();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_COMBO(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_COMBO(?,?);end;");
                 codigo=(String)Asig.getSelectedItem();
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -410,7 +410,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
                 carnetx.clear();
                 nombres.clear();
                 apellidos.clear();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_TEXTFIELDALUMNO(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_TEXTFIELDALUMNO(?,?);end;");
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
                 cstm.execute();

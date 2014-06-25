@@ -321,7 +321,7 @@ public class Update_Asignatura extends javax.swing.JFrame {
                 
                 try{
                     cn= c.getConnectionDocente();
-                    cstm = cn.prepareCall("begin notasfia.sp_asignatura_update(?,?,?,?,?,?,?,?,?,?,?,?,?,?);end;");
+                    cstm = cn.prepareCall("begin tareabase.sp_asignatura_update(?,?,?,?,?,?,?,?,?,?,?,?,?,?);end;");
                     cstm.setString(1,(String)codigo.getSelectedItem());
                     cstm.setString(2,nom.getText());
                     cstm.setString(3,gen.getText());
@@ -366,7 +366,7 @@ System.exit( 0 );
        OracleConnection c = new OracleConnection();
         try{
            cn= c.getConnectionDocente();
-           cstm = cn.prepareCall("begin notasfia.CURSORES.Obtener_asignatura(?,?);end;");
+           cstm = cn.prepareCall("begin tareabase.CURSORES.Obtener_asignatura(?,?);end;");
            cstm.setString(1,(String)codigo.getSelectedItem());
            cstm.registerOutParameter(2,OracleTypes.CURSOR);
             cstm.execute();
@@ -509,7 +509,7 @@ public void llenarcombo1(){
             OracleConnection c = new OracleConnection();
             try {
                 cn= c.getConnectionDocente();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.OBTENER_DATOS(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
                 String dui= "12345";
                 cstm.setString(1,dui);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);

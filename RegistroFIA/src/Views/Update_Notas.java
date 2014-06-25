@@ -244,7 +244,7 @@ if(Asig.getSelectedIndex()!=0){
                  cn= c.getConnectionDocente();
                  cstm=null;
                  rset=null;
-                 cstm = cn.prepareCall("begin notasfia.sp_nota_ciclo_update(?,?,?,?);end;");
+                 cstm = cn.prepareCall("begin tareabase.sp_nota_ciclo_update(?,?,?,?);end;");
                  cstm.setString(1,(String)carnetCombo.getSelectedItem());
                  cstm.setString(2,(String)Asig.getSelectedItem());
                  cstm.setInt(3,(int)Evalu.getSelectedItem());
@@ -375,7 +375,7 @@ if(Asig.getSelectedIndex()!=0){
         OracleConnection c = new OracleConnection();
         try {
                 cn= c.getConnectionDocente();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.OBTENER_DATOS(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
                 String dui= "12345";
                 cstm.setString(1,dui);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -410,7 +410,7 @@ if(Asig.getSelectedIndex()!=0){
                 cn= c.getConnectionDocente();
                 String codigo="";
                 Evalu.removeAllItems();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_COMBO(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_COMBO(?,?);end;");
                 codigo=(String)Asig.getSelectedItem();
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -450,7 +450,7 @@ if(Asig.getSelectedIndex()!=0){
                 String codigo="";
                 codigo=(String)Asig.getSelectedItem();
                int evaluacio=(int)Evalu.getSelectedItem();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_TEXTFIELDALUMNO2(?,?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_TEXTFIELDALUMNO2(?,?,?);end;");
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
                 cstm.setInt(3,evaluacio);
@@ -494,7 +494,7 @@ if(Asig.getSelectedIndex()!=0){
                 String codigo="";
                 codigo=(String)Asig.getSelectedItem();
                 String cart=(String)carnetCombo.getSelectedItem();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_TEXTFIELDALUMNO3(?,?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_TEXTFIELDALUMNO3(?,?,?);end;");
                 cstm.setString(1,codigo);
                 cstm.setString(2, cart);
                 cstm.registerOutParameter(3, OracleTypes.CURSOR);
