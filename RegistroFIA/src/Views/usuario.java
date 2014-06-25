@@ -35,7 +35,7 @@ public class usuario extends javax.swing.JFrame {
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_perfil_retornar(?); end;";
+            String sql="begin basenotas.sp_perfil_retornar(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -189,7 +189,7 @@ public class usuario extends javax.swing.JFrame {
             else
             {
                 CallableStatement sp ;
-                sp = conn.prepareCall("call sp_usuario_insertar(?,?,?)");
+                sp = conn.prepareCall("call basenotas.sp_usuario_insertar(?,?,?)");
                 sp.setString("id_usuario1", id_usuario.getText().toString() );
                 sp.setInt("id_perfil1", objeto.getCodigo() );
                 sp.setString("pass1", pass.getText().toString() );

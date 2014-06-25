@@ -35,7 +35,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_asignatura_retornar(?); end;";
+            String sql="begin basenotas.sp_asignatura_retornar(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -158,7 +158,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
             conn = c.getConnection();
           
             CallableStatement sp ;
-            sp = conn.prepareCall("call sp_prerrequisito_eliminar(?,?)");
+            sp = conn.prepareCall("call basenotas.sp_prerrequisito_eliminar(?,?)");
             sp.setString("codigo_asignatura1", objeto1.getdato() );
             sp.setString("materia_rrequisito1", objeto2.getdato() );
               
@@ -190,7 +190,7 @@ public class prerrequisito_eliminar extends javax.swing.JFrame implements ItemLi
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_pre_ret_eliminar(?,?); end;";
+            String sql="begin basenotas.sp_pre_ret_eliminar(?,?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);

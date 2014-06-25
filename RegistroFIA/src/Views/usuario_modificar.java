@@ -201,7 +201,7 @@ public class usuario_modificar extends javax.swing.JFrame {
             else
             {
                 CallableStatement sp ;
-                sp = conn.prepareCall("call sp_usuario_modificar(?,?,?)");
+                sp = conn.prepareCall("call basenotas.sp_usuario_modificar(?,?,?)");
                 sp.setString("id_usuario1", id_usuario.getText().toString() );
                 sp.setString("pass1", pass.getText().toString() );
                 sp.setInt("estado_usuario1", objeto.getCodigo() );

@@ -45,7 +45,7 @@ public class alumno_modificar extends javax.swing.JFrame {
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_alumnos_retornar(?); end;";
+            String sql="begin basenotas.sp_alumnos_retornar(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -388,7 +388,7 @@ public class alumno_modificar extends javax.swing.JFrame {
                 }
                 
                 CallableStatement sp ;
-                sp = conn.prepareCall("call sp_alumno_modificar(?,?,?,?,?,?,?,?,?,?)");
+                sp = conn.prepareCall("call basenotas.sp_alumno_modificar(?,?,?,?,?,?,?,?,?,?)");
                 sp.setString("carnet1", objeto.getdato() );
                 sp.setString("nombres1", nombres.getText().toString() );
                 sp.setString("apellidos1", apellidos.getText().toString() );

@@ -34,7 +34,7 @@ public class alumno_insertar extends javax.swing.JFrame {
             conn = c.getConnection();
             
             //LLamado del procedimiento al estilo pl/sql
-            String sql="begin sp_usuario_disponibles(?); end;";
+            String sql="begin basenotas.sp_usuario_disponibles(?); end;";
             
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -393,7 +393,7 @@ public class alumno_insertar extends javax.swing.JFrame {
                 }
                 
                 CallableStatement sp ;
-                sp = conn.prepareCall("call sp_alumno_insertar(?,?,?,?,?,?,?,?,?,?,?)");
+                sp = conn.prepareCall("call basenotas.sp_alumno_insertar(?,?,?,?,?,?,?,?,?,?,?)");
                 sp.setString("carnet1", carnet.getText().toString() );
                 sp.setString("id_usuario1", objeto.getdato() );
                 sp.setString("nombres1", nombres.getText().toString() );

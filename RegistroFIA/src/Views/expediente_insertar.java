@@ -30,7 +30,7 @@ public class expediente_insertar extends javax.swing.JFrame {
         try {
 
             conn = c.getConnection();
-            String sql = "BEGIN SP_CARRERA_RECUPERAR(?); END;";
+            String sql = "BEGIN basenotas.SP_CARRERA_RECUPERAR(?); END;";
 
             CallableStatement sp;
             sp = conn.prepareCall(sql);
@@ -146,7 +146,7 @@ public class expediente_insertar extends javax.swing.JFrame {
 
         try {
             conn = c.getConnection();
-            String sql = "BEGIN sp_expediente_insertar(?,?,?,?,?); END;";
+            String sql = "BEGIN basenotas.sp_expediente_insertar(?,?,?,?,?); END;";
 
             CallableStatement sp;
             sp = conn.prepareCall(sql);
