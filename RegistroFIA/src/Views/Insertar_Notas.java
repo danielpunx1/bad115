@@ -118,6 +118,11 @@ ResultSet rset = null;
         jButton3.setText("Cancelar");
 
         jButton4.setText("Volver");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Carnet");
 
@@ -224,7 +229,7 @@ ResultSet rset = null;
             OracleConnection c = new OracleConnection();
              try{
                  cn= c.getConnectionDocente();
-                 cstm = cn.prepareCall("begin notasfia.sp_nota_ciclo_insert(?,?,?,?);end;");
+                 cstm = cn.prepareCall("begin tareabase.sp_nota_ciclo_insert(?,?,?,?);end;");
                  cstm.setString(1,carnet.getText());
                  cstm.setString(2,(String)Asig.getSelectedItem());
                  cstm.setInt(3,(int)Eval.getSelectedItem());
@@ -288,6 +293,13 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
 }  // TODO add your handling code here:
     }//GEN-LAST:event_notaKeyTyped
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        menudocente jFrame= new menudocente();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -345,7 +357,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
         OracleConnection c = new OracleConnection();
         try {
                 cn= c.getConnectionDocente();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.OBTENER_DATOS(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.OBTENER_DATOS(?,?);end;");
                 String dui= "12345";
                 cstm.setString(1,dui);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -380,7 +392,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
                 cn= c.getConnectionDocente();
                 String codigo="";
                 Eval.removeAllItems();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_COMBO(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_COMBO(?,?);end;");
                 codigo=(String)Asig.getSelectedItem();
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
@@ -398,7 +410,7 @@ JOptionPane.showMessageDialog(null, "No puede ingresar Letras", "Error en los da
                 carnetx.clear();
                 nombres.clear();
                 apellidos.clear();
-                cstm = cn.prepareCall("begin notasfia.CURSORES.LLENAR_TEXTFIELDALUMNO(?,?);end;");
+                cstm = cn.prepareCall("begin tareabase.CURSORES.LLENAR_TEXTFIELDALUMNO(?,?);end;");
                 cstm.setString(1,codigo);
                 cstm.registerOutParameter(2, OracleTypes.CURSOR);
                 cstm.execute();

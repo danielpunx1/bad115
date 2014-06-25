@@ -17,6 +17,7 @@ public class menudocente extends javax.swing.JFrame {
      */
     public menudocente() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -28,53 +29,112 @@ public class menudocente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        nueva_asignatura = new javax.swing.JButton();
+        actualiza_asignatura = new javax.swing.JButton();
+        Insertar_notas = new javax.swing.JButton();
+        Actualizar_notas = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Docente");
 
-        jButton1.setText("Nueva Asignatura");
+        nueva_asignatura.setText("Nueva Asignatura");
+        nueva_asignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nueva_asignaturaActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Actualizar Asignatura");
+        actualiza_asignatura.setText("Actualizar Asignatura");
+        actualiza_asignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualiza_asignaturaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Insertar Notas");
+        Insertar_notas.setText("Insertar Notas");
+        Insertar_notas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Insertar_notasActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Actualizar Notas");
+        Actualizar_notas.setText("Actualizar Notas");
+        Actualizar_notas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Actualizar_notasActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel1.setText("MENU DOCENTE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(89, 89, 89)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Insertar_notas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nueva_asignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(actualiza_asignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Actualizar_notas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel1)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(actualiza_asignatura)
+                    .addComponent(nueva_asignatura))
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(Insertar_notas)
+                    .addComponent(Actualizar_notas))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nueva_asignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_asignaturaActionPerformed
+        Nueva_Asignatura jFrame= new Nueva_Asignatura();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nueva_asignaturaActionPerformed
+
+    private void actualiza_asignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualiza_asignaturaActionPerformed
+        Update_Asignatura jFrame= new Update_Asignatura();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+// TODO add your handling code here:
+    }//GEN-LAST:event_actualiza_asignaturaActionPerformed
+
+    private void Insertar_notasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Insertar_notasActionPerformed
+         Insertar_Notas jFrame= new Insertar_Notas();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+// TODO add your handling code here:
+    }//GEN-LAST:event_Insertar_notasActionPerformed
+
+    private void Actualizar_notasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actualizar_notasActionPerformed
+        Update_Notas jFrame= new Update_Notas();
+        jFrame.setVisible(true);
+        this.setVisible(false);
+// TODO add your handling code here:
+    }//GEN-LAST:event_Actualizar_notasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,9 +172,10 @@ public class menudocente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton Actualizar_notas;
+    private javax.swing.JButton Insertar_notas;
+    private javax.swing.JButton actualiza_asignatura;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton nueva_asignatura;
     // End of variables declaration//GEN-END:variables
 }

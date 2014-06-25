@@ -4,10 +4,13 @@
  */
 package Views;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 import registrofia.OracleConnection;
 
 /**
@@ -112,31 +115,49 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         OracleConnection oc = new OracleConnection();
         Connection conn = null;
-        Statement stmt = null;
+        CallableStatement cstm = null;
         ResultSet rs = null;
+        int perf=0;
         try {
             conn = oc.getConnection();
-            stmt = conn.createStatement();
-            String query = "SELECT id_usuario, pass FROM usuario WHERE id_usuario='" 
-                    + jTextField1.getText().toString() + "' AND pass='" 
-                    + jPasswordField1.getText().toString() + "'";
-            rs = stmt.executeQuery(query);
-            
-            if (rs.next()) {
+            cstm = conn.prepareCall("{call sp_login(?,?,?)}");
+            cstm.setString(1,jTextField1.getText());
+            cstm.setString(2,jPasswordField1.getText());
+            cstm.registerOutParameter(3,OracleTypes.NUMBER );
+            cstm.execute();
+            perf=((OracleCallableStatement) cstm).getInt(3);
+            if (perf!=0) {
                 OracleConnection.setUsr(jTextField1.getText().toString());
                 OracleConnection.setPsw(jPasswordField1.getText().toString());
                 //System.out.println(rs.getString("id_usuario") + " " + rs.getString("pass"));
                 //System.out.println(OracleConnection.getUsr() + " " + OracleConnection.getPsw());
-                this.dispose();
-                MainMenu main = new MainMenu(jTextField1.getText().toString());
-                main.setLocationRelativeTo(null);
-                main.setVisible(true);
             } else {
                 //ResultSet is empty
                 JOptionPane.showMessageDialog(null, "Combinación \"usuario / contraseña\" incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
                 jTextField1.setText("");
                 jPasswordField1.setText("");
             }
+    switch (perf) {
+            case 1:     {
+                        menuadmin jFrame= new menuadmin();
+                        jFrame.setVisible(true);
+                        this.setVisible(false);
+                        }
+                        break;
+            case 2:     {
+                        menudocente jFrame= new menudocente();
+                        jFrame.setVisible(true);
+                        this.setVisible(false);
+                        }
+                     break;
+            case 3:     {
+                        menuadmin jFrame= new menuadmin();
+                        jFrame.setVisible(true);
+                        this.setVisible(false);
+                        }
+                     break;
+                }
+         
             
         } catch (Exception e) {
             // handle the exception
@@ -145,12 +166,14 @@ public class InicioSesion extends javax.swing.JFrame {
         } finally {
             try {
                 rs.close();
-                stmt.close();
+                cstm.close();
                 conn.close();
             } catch (Exception ee) {
                 ee.printStackTrace();
             }
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
