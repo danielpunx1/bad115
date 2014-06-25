@@ -120,7 +120,7 @@ public class InicioSesion extends javax.swing.JFrame {
         int perf=0;
         try {
             conn = oc.getConnection();
-            cstm = conn.prepareCall("{call sp_login(?,?,?)}");
+            cstm = conn.prepareCall("{call tareabase.sp_login(?,?,?)}");
             cstm.setString(1,jTextField1.getText());
             cstm.setString(2,jPasswordField1.getText());
             cstm.registerOutParameter(3,OracleTypes.NUMBER );
